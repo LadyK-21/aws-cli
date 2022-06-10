@@ -1,40 +1,40 @@
 
-name: Run tests
+name: "Run tests"
 
 on:
-  push:
+  push: 
   pull_request:
-    branches-ignore: [ master ]
+    branches-ignore: [ 'master' ]
 
 jobs:
   build:
 
-    runs-on: ${{ matrix.os }}
+    runs-on: "${{ matrix.os }}"
     strategy:
       fail-fast: false
       matrix:
         python-version: [3.8, 3.9]
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: 'ubuntu-2004'
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+    - uses: "actions/checkout@v3"
+    - name: "Set up Python ${{ matrix.python-version }}"
+      uses: "actions/setup-python@v3"
       with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+        python-version: "${{ matrix.python-version }}"
+    - name: "Install dependencies"
       run: |
         python scripts/ci/install
         python scripts/ci/install-check
-    - name: Run checks
-      run: python scripts/ci/run-check
-    - name: Run tests
-      run: python scripts/ci/run-tests --with-cov
-    - name: Run backend tests
+    - name: "Run checks"
+      run: "python scripts/ci/run-check"
+    - name: "Run tests"
+      run: "python scripts/ci/run-tests --with-codecov"
+    - name: "Run backend tests"
       run: |
         pip uninstall -y awscli
         python scripts/ci/run-backend-tests
-    - name: codecov
-      uses: codecov/codecov-action@v2
+    - name: "codecov"
+      uses: "codecov/codecov-action@v3"
       with:
-        directory: tests
+        directory: "tests"
