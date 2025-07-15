@@ -28,7 +28,7 @@ jobs:
     - name: Build docs
       run: make html
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@v0.1.0
+      uses: actions/upload-pages-artifact@v3.0.1
       with:
         path: _build/html
   deploy:
